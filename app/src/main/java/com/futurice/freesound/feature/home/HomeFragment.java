@@ -48,7 +48,7 @@ import static com.futurice.freesound.common.utils.Preconditions.get;
 public final class HomeFragment extends BindingBaseFragment<HomeFragmentComponent> {
 
     @Inject
-    HomeFragmentViewModel homeFragmentViewModel;
+    UiBinder<Fragment.UiEvent, Fragment.UiModel> uiBinder;
 
     @Inject
     Picasso picasso;
@@ -68,41 +68,47 @@ public final class HomeFragment extends BindingBaseFragment<HomeFragmentComponen
     @NonNull
     private final AtomicOption<Unbinder> unbinder = new AtomicOption<>();
 
-    @NonNull
-    private final DataBinder dataBinder = new DataBinder() {
+//    @NonNull
+//    private final DataBinder dataBinder = new DataBinder() {
+//
+//        @Override
+//        public void bind(@NonNull final CompositeDisposable d) {
+//            Preconditions.checkNotNull(homeFragmentViewModel);
+//
+//            d.add(homeFragmentViewModel.getImage()
+//                                       .subscribeOn(schedulerProvider.computation())
+//                                       .observeOn(schedulerProvider.ui())
+//                                       .subscribe(it -> picasso.load(it)
+//                                                               .transform(PicassoTransformations
+//                                                                                  .circular())
+//                                                               .into(avatarImage),
+//                                                  e -> Timber.e(e, "Error setting image")));
+//
+//            d.add(homeFragmentViewModel.getUserName()
+//                                       .subscribeOn(schedulerProvider.computation())
+//                                       .observeOn(schedulerProvider.ui())
+//                                       .subscribe(it -> userNameTextView.setText(it),
+//                                                  e -> Timber.e(e, "Error setting user")));
+//
+//            d.add(homeFragmentViewModel.getAbout()
+//                                       .subscribeOn(schedulerProvider.computation())
+//                                       .observeOn(schedulerProvider.ui())
+//                                       .subscribe(it -> aboutTextView.setText(it),
+//                                                  e -> Timber.e(e, "Error setting aboutTextView")));
+//        }
+//
+//        @Override
+//        public void unbind() {
+//            picasso.cancelRequest(avatarImage);
+//        }
+//
+//    };
 
-        @Override
-        public void bind(@NonNull final CompositeDisposable d) {
-            Preconditions.checkNotNull(homeFragmentViewModel);
-
-            d.add(homeFragmentViewModel.getImage()
-                                       .subscribeOn(schedulerProvider.computation())
-                                       .observeOn(schedulerProvider.ui())
-                                       .subscribe(it -> picasso.load(it)
-                                                               .transform(PicassoTransformations
-                                                                                  .circular())
-                                                               .into(avatarImage),
-                                                  e -> Timber.e(e, "Error setting image")));
-
-            d.add(homeFragmentViewModel.getUserName()
-                                       .subscribeOn(schedulerProvider.computation())
-                                       .observeOn(schedulerProvider.ui())
-                                       .subscribe(it -> userNameTextView.setText(it),
-                                                  e -> Timber.e(e, "Error setting user")));
-
-            d.add(homeFragmentViewModel.getAbout()
-                                       .subscribeOn(schedulerProvider.computation())
-                                       .observeOn(schedulerProvider.ui())
-                                       .subscribe(it -> aboutTextView.setText(it),
-                                                  e -> Timber.e(e, "Error setting aboutTextView")));
-        }
-
-        @Override
-        public void unbind() {
-            picasso.cancelRequest(avatarImage);
-        }
-
-    };
+    @Override
+    public void onStart() {
+        super.onStart();
+        uiBinder.bind();
+    }
 
     @NonNull
     static HomeFragment create() {

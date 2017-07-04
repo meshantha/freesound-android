@@ -133,6 +133,10 @@ dependencies {
     implementation "com.android.support:design:$dependencyVersions.androidSupportLibrary"
     implementation "com.android.support.constraint:constraint-layout:$dependencyVersions.androidSupportConstraintLibrary"
 
+    implementation "android.arch.lifecycle:runtime:1.0.0-alpha3"
+    implementation "android.arch.lifecycle:extensions:1.0.0-alpha3"
+    annotationProcessor "android.arch.lifecycle:compiler:1.0.0-alpha3"
+
     // Dagger 2
     annotationProcessor "com.squareup:javapoet:$dependencyVersions.javaPoet"
     annotationProcessor "com.google.dagger:dagger-compiler:$dependencyVersions.dagger2"
